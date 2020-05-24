@@ -32,10 +32,6 @@ if getImageArch() in ("aarch64"):
 
 from traceback import print_exc
 
-profile("Geolocation")
-import Tools.Geolocation
-Tools.Geolocation.InitGeolocation()
-
 profile("ClientMode")
 import Components.ClientMode
 Components.ClientMode.InitClientMode()
@@ -605,15 +601,17 @@ def runScreenTest():
 	return 0
 
 profile("Init:skin")
-print "[Enigma2] Initialising Skins."
 import skin
-skin.InitSkins()
-print "[Enigma2] Initialisation of Skins complete."
+skin.loadSkinData(enigma.getDesktop(0))
 
 profile("InputDevice")
 import Components.InputDevice
 Components.InputDevice.InitInputDevices()
 import Components.InputHotplug
+
+profile("TimeZones")
+import Components.Timezones
+Components.Timezones.InitTimeZones()
 
 profile("SetupDevices")
 import Components.SetupDevices
@@ -635,10 +633,6 @@ Components.RecordingConfig.InitRecordingConfig()
 profile("UsageConfig")
 import Components.UsageConfig
 Components.UsageConfig.InitUsageConfig()
-
-profile("TimeZones")
-import Components.Timezones
-Components.Timezones.InitTimeZones()
 
 profile("Init:DebugLogCheck")
 import Screens.LogManager
